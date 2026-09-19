@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Project } from "@/lib/data";
+import { useLenis } from "@/components/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +21,7 @@ export default function ProjectDetailClient({ project, otherProjects }: ProjectD
 	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 	const lightboxRef = useRef<HTMLDivElement>(null);
 	const lightboxImgRef = useRef<HTMLDivElement>(null);
+	const lenis = useLenis();
 
 	useEffect(() => {
 		const ctx = gsap.context(() => {
@@ -99,15 +101,20 @@ export default function ProjectDetailClient({ project, otherProjects }: ProjectD
 		return () => window.removeEventListener("keydown", handleKey);
 	}, [lightboxIndex, closeLightbox, goNext, goPrev]);
 
-	// Prevent body scroll when lightbox is open
+	// Prevent body scroll when lightbox is open (including Lenis wheel/touch)
 	useEffect(() => {
 		if (lightboxIndex !== null) {
 			document.body.style.overflow = "hidden";
+			lenis?.stop();
 		} else {
 			document.body.style.overflow = "";
+			lenis?.start();
 		}
-		return () => { document.body.style.overflow = ""; };
-	}, [lightboxIndex]);
+		return () => {
+			document.body.style.overflow = "";
+			lenis?.start();
+		};
+	}, [lightboxIndex, lenis]);
 
 	return (
 		<main

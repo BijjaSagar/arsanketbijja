@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white selection:bg-white selection:text-black cursor-none`}>
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white selection:bg-white selection:text-black md:cursor-none`}>
 				<ScrollProgress />
 				<Cursor />
 				<Header />
