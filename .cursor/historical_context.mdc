@@ -1,0 +1,48 @@
+# Historical Context
+
+## 2025-11-25
+
+### Masonry Gallery Layout
+
+**File:** `app/projects/[id]/ProjectDetailClient.tsx` (lines 85-117)
+
+**Change:** Replaced vertical stack gallery with CSS masonry columns:
+- 3 columns on desktop, 2 on tablet, 1 on mobile
+- Asymmetric aspect ratios (4:3, 1:1, 3:4) based on index
+- Hover effects with scale + overlay
+- Figure numbering (X.Y format)
+
+---
+
+### Mapped ALL Project Images to Gallery
+
+**File:** `lib/data.ts` (lines 37-103)
+
+**Change:** 
+- Added `generateImages()` helper function for numbered image paths
+- Updated ALL 9 projects to include every numbered image from their folders
+- Added exported `Project` type for type safety
+
+**File:** `app/projects/[id]/ProjectDetailClient.tsx` (line 9)
+
+**Change:** Import `Project` type from `@/lib/data` instead of local definition
+
+**Result:** Clicking any project now shows full gallery of all images (1.jpg, 2.jpg, etc.)
+
+---
+
+### Added SATHYA CONSULTANTS Experience
+
+**File:** `lib/data.ts` (lines 23-28)
+
+**Change:** Added new experience entry:
+```typescript
+{
+  role: "Intern",
+  company: "SATHYA CONSULTANTS, Bengaluru",
+  period: "AUG 2022 - DEC 2022",
+  details: ["Detailed CAD drawings", "Handmade cardboard model", "3D Sketches"],
+}
+```
+
+**Affected Components:** `components/About.tsx`, `app/page.tsx`, `app/about/page.tsx` (auto-updated via `PERSONAL_INFO` import)
