@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sanket Bijja — Architecture Portfolio
 
-## Getting Started
+Next.js 16 portfolio with a small admin CMS (Prisma + SQLite). The public design is unchanged; content, images, and projects are editable from `/admin`.
 
-First, run the development server:
+## Admin
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- URL: `/admin/login` (then `/admin`)
+- Credentials come from environment variables, not from the repo:
+  - `ADMIN_EMAIL`
+  - `ADMIN_PASSWORD`
+  - `SESSION_SECRET` (long random string, 32+ characters)
+- The first boot seeds one admin user from those values. Changing them on the server and restarting updates the login.
+
+**Change the production password.** Do not use the local development password on Hostinger.
+
+## Hostinger (production)
+
+This app is a **Node.js** app, not a static export. Do **not** use output directory `out`.
+
+In the Hostinger dashboard:
+
+| Setting | Value |
+| --- | --- |
+| Package manager | **npm** |
+| Build command | `npm run build` |
+| Start command | `npm start` |
+| Output / application directory | **`.next`** (Node.js app) |
+| Node version | 20+ |
+
+Environment variables to set in Hostinger:
+
+```
+ADMIN_EMAIL=your-admin-email@example.com
+ADMIN_PASSWORD=a-strong-unique-password
+SESSION_SECRET=a-long-random-string
+DATABASE_URL=file:../data/cms.db
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`DATABASE_URL` is relative to `prisma/schema.prisma` and creates `data/cms.db` at the project root.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Persist CMS data across deploys
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Keep these on the server (they are gitignored):
 
-## Learn More
+- `data/` — SQLite database (`cms.db`)
+- `public/uploads/` — images uploaded in the admin
 
-To learn more about Next.js, take a look at the following resources:
+If a clean deploy wipes the project folder, admin edits and new uploads are lost and the site will re-seed from the original portfolio content.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+First deploy auto-seeds profile copy and existing projects from `lib/data.ts`, so the live site is not empty.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Local development
 
-## Deploy on Vercel
+```bash
+cp .env.example .env
+# edit ADMIN_EMAIL, ADMIN_PASSWORD, SESSION_SECRET
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+npm install
+npx prisma db push
+npm run db:seed
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) for the public site and [http://localhost:3000/admin/login](http://localhost:3000/admin/login) for the CMS.
+
+## Scripts
+
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Next.js dev server |
+| `npm run build` | `prisma generate` + `prisma db push` + `next build` |
+| `npm start` | Production server (`next start`) |
+| `npm run db:seed` | Seed admin, site content, and projects if empty |
+| `npm run db:push` | Apply Prisma schema to SQLite |
+
+## Stack
+
+- Next.js App Router
+- Prisma + SQLite
+- httpOnly JWT cookies (`jose`) + `bcryptjs`
+- Uploads stored under `public/uploads/`

@@ -2,9 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { PERSONAL_INFO } from "@/lib/data";
-
-export default function Hero() {
+export default function Hero({ name, role }: { name: string; role: string }) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const svgRef = useRef<SVGSVGElement>(null);
 	const textRef = useRef<HTMLDivElement>(null);
@@ -104,7 +102,7 @@ export default function Hero() {
 			>
 				<h2 className="text-sm md:text-base font-mono tracking-[0.5em] mb-4 uppercase opacity-70">Portfolio</h2>
 				<h1 className="text-6xl md:text-9xl font-bold tracking-tighter leading-none mb-6">
-					{PERSONAL_INFO.name.split(" ").map((word, i) => (
+					{name.split(" ").map((word, i) => (
 						<span
 							key={i}
 							className="block"
@@ -113,7 +111,7 @@ export default function Hero() {
 						</span>
 					))}
 				</h1>
-				<p className="text-xl md:text-2xl font-light tracking-widest opacity-80">{PERSONAL_INFO.role}</p>
+				<p className="text-xl md:text-2xl font-light tracking-widest opacity-80">{role}</p>
 			</div>
 		</section>
 	);

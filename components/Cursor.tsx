@@ -1,13 +1,16 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 export default function Cursor() {
+	const pathname = usePathname();
 	const cursorRef = useRef<HTMLDivElement>(null);
 	const followerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		if (pathname.startsWith("/admin")) return;
 		const moveCursor = (e: MouseEvent) => {
 			gsap.to(cursorRef.current, {
 				x: e.clientX,
@@ -23,7 +26,9 @@ export default function Cursor() {
 
 		window.addEventListener("mousemove", moveCursor);
 		return () => window.removeEventListener("mousemove", moveCursor);
-	}, []);
+	}, [pathname]);
+
+	if (pathname.startsWith("/admin")) return null;
 
 	return (
 		<>

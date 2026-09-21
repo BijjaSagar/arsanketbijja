@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { PROJECTS } from "@/lib/data";
+import type { PublicProject } from "@/lib/types";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,16 +13,16 @@ type FilterCategory = "All" | "Residential" | "Commercial";
 
 const CATEGORIES: FilterCategory[] = ["All", "Residential", "Commercial"];
 
-export default function ProjectGrid() {
+export default function ProjectGrid({ projects }: { projects: PublicProject[] }) {
 	const gridRef = useRef<HTMLDivElement>(null);
 	const [activeFilter, setActiveFilter] = useState<FilterCategory>("All");
 
 	const filteredProjects = activeFilter === "All"
-		? PROJECTS
-		: PROJECTS.filter((p) => p.category === activeFilter);
+		? projects
+		: projects.filter((p) => p.category === activeFilter);
 
 	const getCategoryCount = (cat: FilterCategory) =>
-		cat === "All" ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
+		cat === "All" ? projects.length : projects.filter((p) => p.category === cat).length;
 
 	useEffect(() => {
 		if (!gridRef.current) return;

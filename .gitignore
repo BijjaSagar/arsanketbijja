@@ -30,8 +30,23 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — keep the example committed
 .env*
+!.env.example
+
+# CMS database
+/data/*.db
+/data/*.db-journal
+/data/*.db-wal
+/data/*.db-shm
+*.db
+*.db-journal
+
+# Admin uploads (keep folder via .gitkeep)
+/public/uploads/**
+!/public/uploads/.gitkeep
+!/public/uploads/projects/
+!/public/uploads/projects/.gitkeep
 
 # vercel
 .vercel

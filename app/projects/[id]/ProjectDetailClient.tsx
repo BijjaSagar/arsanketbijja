@@ -6,14 +6,14 @@ import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { Project } from "@/lib/data";
+import type { PublicProject } from "@/lib/types";
 import { useLenis } from "@/components/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type ProjectDetailProps = {
-	project: Project;
-	otherProjects: Project[];
+	project: PublicProject;
+	otherProjects: PublicProject[];
 };
 
 export default function ProjectDetailClient({ project, otherProjects }: ProjectDetailProps) {
@@ -137,6 +137,9 @@ export default function ProjectDetailClient({ project, otherProjects }: ProjectD
 					<div>
 						<span className="block font-mono text-sm text-zinc-500 mb-4 uppercase tracking-[0.2em]">{project.category}</span>
 						<h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-none">{project.title}</h1>
+						{project.description ? (
+							<p className="mt-6 max-w-3xl text-lg text-zinc-400 font-light">{project.description}</p>
+						) : null}
 					</div>
 					<div className="text-right hidden md:block">
 						<span className="font-mono text-sm text-zinc-500">Project ID: {project.id}</span>

@@ -1,27 +1,23 @@
-import { PROJECTS } from "@/lib/data";
+import { getPublishedProjects, getProjectBySlug, toPublicProject } from "@/lib/cms";
 import { notFound } from "next/navigation";
 import ProjectDetailClient from "./ProjectDetailClient";
 
-export async function generateStaticParams() {
-	return PROJECTS.map((project) => ({
-		id: project.id,
-	}));
-}
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
-	const project = PROJECTS.find((p) => p.id === id);
+	const project = await getProjectBySlug(id);
 
 	if (!project) {
 		notFound();
 	}
 
-	// Filter other projects to show at the bottom
-	const otherProjects = PROJECTS.filter((p) => p.id !== id);
+	const otherProjects = (await getPublishedProjects()).filter((item) => item.id !== project.slug);
 
 	return (
 		<ProjectDetailClient
-			project={project}
+			project={toPublicProject(project)}
 			otherProjects={otherProjects}
 		/>
 	);

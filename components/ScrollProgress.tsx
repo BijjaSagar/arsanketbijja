@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,10 +8,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ScrollProgress() {
+	const pathname = usePathname();
 	const barRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!barRef.current) return;
+		if (!barRef.current || pathname.startsWith("/admin")) return;
 
 		const ctx = gsap.context(() => {
 			gsap.to(barRef.current, {
@@ -25,7 +27,9 @@ export default function ScrollProgress() {
 		});
 
 		return () => ctx.revert();
-	}, []);
+	}, [pathname]);
+
+	if (pathname.startsWith("/admin")) return null;
 
 	return (
 		<div

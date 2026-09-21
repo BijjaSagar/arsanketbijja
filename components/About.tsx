@@ -1,14 +1,14 @@
-import { PERSONAL_INFO } from "@/lib/data";
+import type { SiteContentData } from "@/lib/types";
 import { ArrowRight } from "lucide-react";
 
-export default function About() {
+export default function About({ site }: { site: SiteContentData }) {
 	return (
 		<section className="py-32 px-4 md:px-12 max-w-screen-2xl mx-auto bg-zinc-950/50 border-y border-white/10">
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 				{/* Left Column: Bio */}
 				<div className="space-y-8">
 					<h2 className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-500">Profile</h2>
-					<p className="text-lg md:text-2xl leading-relaxed font-light text-zinc-300 text-justify">{PERSONAL_INFO.about}</p>
+					<p className="text-lg md:text-2xl leading-relaxed font-light text-zinc-300 text-justify">{site.about}</p>
 
 					<div className="pt-8">
 						<a
@@ -27,7 +27,7 @@ export default function About() {
 					<div>
 						<h3 className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-500 mb-6 border-b border-white/10 pb-2">Education</h3>
 						<ul className="space-y-6">
-							{PERSONAL_INFO.education.map((edu, i) => (
+							{site.education.map((edu, i) => (
 								<li
 									key={i}
 									className="flex flex-col md:flex-row justify-between md:items-start gap-2"
@@ -46,7 +46,7 @@ export default function About() {
 					<div>
 						<h3 className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-500 mb-6 border-b border-white/10 pb-2">Experience</h3>
 						<ul className="space-y-8">
-							{PERSONAL_INFO.experience.map((exp, i) => (
+							{site.experience.map((exp, i) => (
 								<li
 									key={i}
 									className="space-y-2"
@@ -74,7 +74,7 @@ export default function About() {
 					<div>
 						<h3 className="text-xs font-mono tracking-[0.2em] uppercase text-zinc-500 mb-6 border-b border-white/10 pb-2">Software & Skills</h3>
 						<div className="flex flex-wrap gap-3">
-							{PERSONAL_INFO.skills.map((skill, i) => (
+							{site.skills.map((skill, i) => (
 								<span
 									key={i}
 									className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs tracking-wide"

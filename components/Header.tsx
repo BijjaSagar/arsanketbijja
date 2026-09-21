@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 export default function Header() {
 	const pathname = usePathname();
+	if (pathname.startsWith("/admin")) return null;
 
 	const links = [
 		{ href: "/", label: "Home" },

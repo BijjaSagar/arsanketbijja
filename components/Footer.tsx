@@ -1,6 +1,6 @@
-import { PERSONAL_INFO } from "@/lib/data";
+import type { SiteContentData } from "@/lib/types";
 
-export default function Footer() {
+export default function Footer({ site }: { site: SiteContentData }) {
 	return (
 		<footer className="relative bg-black text-white border-t border-white/10 overflow-hidden">
 			{/* Architectural Ruler / Scale marks */}
@@ -26,7 +26,7 @@ export default function Footer() {
 					<div className="space-y-4">
 						<h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-white">Let&#39;s Connect</h2>
 						<p className="text-zinc-200 max-w-md font-mono text-sm">
-							{"// Based in"} {PERSONAL_INFO.location}
+							{"// Based in"} {site.location}
 							<br />
 							{"// Open for opportunities and collaborations"}
 						</p>
@@ -34,14 +34,14 @@ export default function Footer() {
 
 					<div className="flex flex-col gap-6 text-right">
 						<a
-							href={`mailto:${PERSONAL_INFO.email}`}
+							href={`mailto:${site.email}`}
 							className="text-xl md:text-2xl text-white hover:text-zinc-300 transition-colors font-light"
 						>
-							{PERSONAL_INFO.email}
+							{site.email}
 						</a>
 
 						<div className="flex gap-8 justify-end">
-							{Object.entries(PERSONAL_INFO.social).map(([key, url]) => (
+							{Object.entries(site.social).map(([key, url]) => (
 								<a
 									key={key}
 									href={url}
@@ -60,7 +60,7 @@ export default function Footer() {
 				<div className="pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-end md:items-center text-sm text-white font-mono uppercase tracking-wider gap-4">
 					<div className="flex flex-col gap-2">
 						<span className="font-bold">
-							© {new Date().getFullYear()} {PERSONAL_INFO.name}
+							© {new Date().getFullYear()} {site.name}
 						</span>
 						<span title="Attribution-NonCommercial-ShareAlike">CC BY-NC-SA 4.0</span>
 					</div>
