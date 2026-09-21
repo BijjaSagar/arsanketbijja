@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Logo from "@/components/Logo";
 
 const LINKS = [
 	{ href: "/admin", label: "Dashboard" },
@@ -34,8 +35,13 @@ export default function AdminShell({
 			<div className="flex min-h-screen flex-col lg:flex-row">
 				<aside className="border-b border-white/10 lg:border-b-0 lg:border-r lg:w-64 shrink-0">
 					<div className="px-6 py-6 border-b border-white/10">
-						<p className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">Admin</p>
-						<p className="mt-2 text-lg font-bold tracking-tight">Sanket Bijja</p>
+						<Logo
+							href="/admin"
+							compact
+							ariaLabel="Sanket Bijja admin"
+							markClassName="h-8"
+						/>
+						<p className="mt-3 font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-500">Admin</p>
 						{email ? <p className="mt-1 text-xs text-zinc-500 truncate">{email}</p> : null}
 					</div>
 					<nav className="flex flex-row lg:flex-col gap-1 p-3 overflow-x-auto">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Logo from "@/components/Logo";
 
 export default function Header() {
 	const pathname = usePathname();
@@ -11,26 +12,20 @@ export default function Header() {
 	const links = [
 		{ href: "/", label: "Home" },
 		{ href: "/about", label: "About" },
-		// We can add more if needed, e.g., Projects index if we had one separate from home
 	];
 
 	return (
-		<header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-6 md:px-12 mix-blend-difference text-white pointer-events-none">
+		<header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-5 md:px-12 pointer-events-none">
 			<div className="pointer-events-auto">
-				<Link
-					href="/"
-					className="text-xl font-bold tracking-tighter uppercase"
-				>
-					Sanket Bijja
-				</Link>
+				<Logo priority />
 			</div>
 
-			<nav className="pointer-events-auto flex gap-6 md:gap-10">
+			<nav className="pointer-events-auto flex gap-6 mix-blend-difference text-white md:gap-10">
 				{links.map((link) => (
 					<Link
 						key={link.href}
-						href={link.href}
 						className={cn("text-sm font-mono uppercase tracking-widest hover:underline underline-offset-4 decoration-1", pathname === link.href ? "underline" : "")}
+						href={link.href}
 					>
 						{link.label}
 					</Link>

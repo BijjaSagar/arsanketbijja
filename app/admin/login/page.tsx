@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import Logo from "@/components/Logo";
 
 export default function AdminLoginPage() {
 	const router = useRouter();
@@ -37,7 +38,11 @@ export default function AdminLoginPage() {
 	return (
 		<main className="min-h-screen bg-black text-white flex items-center justify-center px-6 md:cursor-auto">
 			<div className="w-full max-w-md border border-white/10 bg-zinc-950 p-8 md:p-10">
-				<p className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-500">Admin</p>
+				<Logo
+					compact
+					markClassName="h-10"
+				/>
+				<p className="mt-6 font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-500">Admin</p>
 				<h1 className="mt-3 text-3xl font-bold tracking-tighter">Sign in</h1>
 				<p className="mt-2 text-sm text-zinc-500">Sanket Bijja portfolio CMS</p>
 

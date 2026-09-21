@@ -1,4 +1,5 @@
 import type { SiteContentData } from "@/lib/types";
+import Logo from "@/components/Logo";
 
 export default function Footer({ site }: { site: SiteContentData }) {
 	return (
@@ -58,11 +59,17 @@ export default function Footer({ site }: { site: SiteContentData }) {
 
 				{/* Bottom Bar */}
 				<div className="pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-end md:items-center text-sm text-white font-mono uppercase tracking-wider gap-4">
-					<div className="flex flex-col gap-2">
-						<span className="font-bold">
-							© {new Date().getFullYear()} {site.name}
-						</span>
-						<span title="Attribution-NonCommercial-ShareAlike">CC BY-NC-SA 4.0</span>
+					<div className="flex items-center gap-4">
+						<Logo
+							compact
+							markClassName="h-8 md:h-9"
+						/>
+						<div className="flex flex-col gap-2">
+							<span className="font-bold">
+								© {new Date().getFullYear()} {site.name}
+							</span>
+							<span title="Attribution-NonCommercial-ShareAlike">CC BY-NC-SA 4.0</span>
+						</div>
 					</div>
 
 					<div className="flex flex-col items-end gap-2 text-right">
